@@ -1,0 +1,54 @@
+.reveal ul + ul {
+  margin-left: 100px;
+}
+
+.reveal ul ul {
+  list-style: initial;
+}
+
+.svg-icon {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  width: 3rem;
+}
+
+.svg-icon--email {
+  color: #2AA3EF;
+}
+
+.svg-icon--solid {
+  color: #e41e26;
+}
+
+.svg-icon__solid {
+  width: 2rem;
+}
+
+.column {
+  display: inline-block;
+}
+
+.grid {
+  text-align: left;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid--3-center {
+  grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center;
+}
+
+.row {
+  grid-column: 1 / 3;
+}
+
+.reveal pre {
+  font-size: 1rem;
+  box-shadow: none;
+}
+
+.reveal pre code {
+  padding: 8px 16px;
+}

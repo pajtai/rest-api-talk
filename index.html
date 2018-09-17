@@ -1,49 +1,190 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+  <title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+  <link rel="stylesheet" href="css/reveal.css">
+  <!--<link rel="stylesheet" href="css/theme/beige.css">-->
+  <!--<link rel="stylesheet" href="css/theme/black.css">-->
+  <!--<link rel="stylesheet" href="css/theme/blood.css">-->
+  <!--<link rel="stylesheet" href="css/theme/league.css">-->
+  <!--<link rel="stylesheet" href="css/theme/moon.css">-->
+  <!--<link rel="stylesheet" href="css/theme/night.css">-->
+  <!--<link rel="stylesheet" href="css/theme/serif.css">-->
+  <!--<link rel="stylesheet" href="css/theme/simple.css">-->
+  <link rel="stylesheet" href="css/theme/sky.css">
+  <!--<link rel="stylesheet" href="css/theme/solarized.css">-->
+  <!--<link rel="stylesheet" href="css/theme/white.css">-->
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+  <link rel="stylesheet" href="css/customization.css">
+  <style>
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
+  </style>
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+    <section id="title">
+      <h1>Build a REST API in Node</h1>
+    </section>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+    <section id="intro">
+      <div class="grid">
+        <h2 class="row">Peter Ajtai</h2>
+        <div>Solid Digital</div>
+        <div>
+          <div class="svg-icon svg-icon--solid">
+          <svg class="svg-icon__solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.81 58.18">
+            <g id="Layer_2" data-name="Layer 2">
+              <path fill="currentColor" d="M0 0h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zM0 46.54h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zm-34.9-23.27h11.64v11.64H11.64zm23.27 0h11.64v11.64H34.91zm23.27 0h11.64v11.64H58.18z" id="Layer_1-2" data-name="Layer 1"/>
+            </g>
+          </svg>
+          </div>
+          www.soliddigital.com
+        </div>
+        <div>Solutions Architect</div>
+        <div><svg class="svg-icon svg-icon--email" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg> peter.ajtai@gmail.com</div>
+        <div></div>
+        <div>
+          <svg class="svg-icon" id="Logo_FIXED" data-name="Logo — FIXED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><style>.cls-1{fill:none;}.cls-2{fill:#1da1f2;}</style></defs><title>Twitter_Logo_Blue</title><rect class="cls-1"/><path class="cls-2" d="M153.62,301.59c94.34,0,145.94-78.16,145.94-145.94,0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,325,122.47a102.38,102.38,0,0,1-29.46,8.07,51.47,51.47,0,0,0,22.55-28.37,102.79,102.79,0,0,1-32.57,12.45,51.34,51.34,0,0,0-87.41,46.78A145.62,145.62,0,0,1,92.4,107.81a51.33,51.33,0,0,0,15.88,68.47A50.91,50.91,0,0,1,85,169.86c0,.21,0,.43,0,.65a51.31,51.31,0,0,0,41.15,50.28,51.21,51.21,0,0,1-23.16.88,51.35,51.35,0,0,0,47.92,35.62,102.92,102.92,0,0,1-63.7,22A104.41,104.41,0,0,1,75,278.55a145.21,145.21,0,0,0,78.62,23"/></svg>
+          @PeterAjtai
+        </div>
+
+
+      </div>
+    </section>
+
+    <section id="contents">
+      <div class="grid">
+        <h2>The story of an API</h2>
+        <div>&nbsp;</div>
+        <ul>
+          <li class="fragment zoom-in">Try it out with:
+            <ul>
+              <li class="fragment zoom-in">Swagger</li>
+            </ul>
+          </li>
+          <li class="fragment zoom-in">Fix it with:
+            <ul>
+              <li class="fragment zoom-in">The Debugger</li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li class="fragment zoom-in">Protect it with:
+            <ul>
+              <li class="fragment zoom-in">Rate Limits</li>
+            </ul>
+          </li>
+          <li class="fragment zoom-in">Fine tune it with:
+            <ul>
+              <li class="fragment zoom-in">Benchmarking</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </section>
+    <section>
+      <section id="swagger-intro">
+      <div class="grid">
+        <div>
+          <h2><a href="https://swagger.io/docs/specification/about/" target="_blank">Swagger</a></h2>
+          <p class="fragment zoom-in">A way to document and manually test your api</p>
+        </div>
+        <div>
+          <ul>
+            <li class="fragment zoom-in">Based on
+              <a href="https://www.openapis.org/about" target="_blank">Open API</a>
+            </li>
+            <li class="fragment zoom-in">Easily document an API</li>
+            <li class="fragment zoom-in">Easily try an API</li>
+            <li class="fragment zoom-in">Integrations with many languages</li>
+          </ul>
+    </div>
+  </div>
+  </section>
+  <section id="swagger-options">
+      <h3>Swagger options</h3>
+        <div class="grid grid--3-center">
+          <div class="fragment zoom-in">One yaml file to describe the api</div>
+          <h3 class="fragment zoom-in">or</h3>
+          <div class="fragment zoom-in">Document each controller / model</div>
+        </div>
+  </section>
+  <section id="swagger-install">
+    <h5>
+      <a target="_blank" href="https://github.com/pajtai/rest/blob/c1de7ec422d342849c30de3e2c25afcf33e43ec8/boot/swagger.js">
+        Swagger Setup
+      </a>
+    </h5>
+    <pre>
+    <code data-trim data-noescape>
+'use strict';
+const swaggerJSDoc = require('swagger-jsdoc');
+
+module.exports = (server) => {
+    const options = {
+        apis: ['./models/**/*.model.js', './api/**/*.controller.js'],
+        swaggerDefinition: {
+            info: {
+                title: 'Todo API',
+                version
+            }
+        }
+    };
+
+    // Initialize swagger-jsdoc -> returns validated swagger spec in json format
+    const swaggerSpec = swaggerJSDoc(options);
+    </code>
+  </pre>
+    https://swagger.io/docs/specification/about/
+    http://localhost:3333/api/api-docs.json
+    Swagger 2 - Swagger 3 is now out
+  </section>
+</section>
+<section></section>
+<section></section>
+<section>
+  <pre>
+    <code data-trim data-noescape>
+    </code>
+  </pre>
+</section>
+</div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+// More info about config & dependencies:
+// - https://github.com/hakimel/reveal.js#configuration
+// - https://github.com/hakimel/reveal.js#dependencies
+Reveal.initialize({
+history: true,
+dependencies: [
+  { src: 'plugin/markdown/marked.js' },
+  { src: 'plugin/markdown/markdown.js' },
+  { src: 'plugin/notes/notes.js', async: true },
+  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+],
+transition: 'zoom'
+});
+</script>
+</body>
 </html>
