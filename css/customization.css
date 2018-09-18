@@ -6,6 +6,10 @@
   list-style: initial;
 }
 
+.reveal .slides {
+  text-align: left;
+}
+
 .svg-icon {
   display: inline-block;
   vertical-align: middle;
@@ -49,6 +53,20 @@
   box-shadow: none;
 }
 
+.reveal pre.code__continuation {
+  margin-top: -77px;
+}
+
 .reveal pre code {
   padding: 8px 16px;
 }
+
+.fragment.zoom-in.disappear,
+.fragment.fade-out.visible.disappear {
+  display: none;
+}
+
+.fragment.zoom-in.disappear.visible {
+  display: block;
+}
+

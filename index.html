@@ -111,15 +111,15 @@
             <li class="fragment zoom-in">Based on
               <a href="https://www.openapis.org/about" target="_blank">Open API</a>
             </li>
-            <li class="fragment zoom-in">Easily document an API</li>
-            <li class="fragment zoom-in">Easily try an API</li>
-            <li class="fragment zoom-in">Integrations with many languages</li>
+            <li class="fragment zoom-in">Integrations with many languages (including node)</li>
+            <li class="fragment zoom-in">Document with JSDoc</li>
+            <li class="fragment zoom-in">Try API with web GUI</li>
           </ul>
     </div>
   </div>
   </section>
   <section id="swagger-options">
-      <h3>Swagger options</h3>
+      <h3>Using Swagger</h3>
         <div class="grid grid--3-center">
           <div class="fragment zoom-in">One yaml file to describe the api</div>
           <h3 class="fragment zoom-in">or</h3>
@@ -132,11 +132,15 @@
         Swagger Setup
       </a>
     </h5>
-    <pre>
-    <code data-trim data-noescape>
+    <div data-fragment-index="2" class="fragment fade-out disappear">Create JSON spec using JSDOC</div>
+    <pre data-fragment-index="2" class="fragment zoom-in disappear">
+      <code data-trim data-noescape>
 'use strict';
 const swaggerJSDoc = require('swagger-jsdoc');
-
+      </code>
+    </pre>
+    <pre data-fragment-index="3" class="code__continuation fragment zoom-in disappear">
+      <code data-trim data-noescape>
 module.exports = (server) => {
     const options = {
         apis: ['./models/**/*.model.js', './api/**/*.controller.js'],
@@ -150,10 +154,52 @@ module.exports = (server) => {
 
     // Initialize swagger-jsdoc -> returns validated swagger spec in json format
     const swaggerSpec = swaggerJSDoc(options);
-    </code>
-  </pre>
+      </code>
+    </pre>
+    <div data-fragment-index="1" class="fragment zoom-in">
+      <div data-fragment-index="3" class="fragment fade-out disappear">Use JSDOC on all models and controllers</div>
+    </div>
+    <aside class="notes">
+      For better layout, resize screen after code is shown.
+      Demo: http://localhost:3333/api/api-docs.json
+    </aside>
+  </section>
+  <section>
+    <h2>JSDOC</h2>
+    <div class="grid">
+    <pre>
+      <code data-trim data-noescape="">
+/**
+ *  @swagger
+ *  /api/v1/todos:
+ *      post:
+ *          description: Add a task
+ *          produces:
+ *              - application/json
+ *          parameters:
+ *              - in: body
+ *                name: task
+ *                schema:
+ *                  $ref: '#/definitions/Task'
+ *          responses:
+ *              200:
+ *                  description: tasks
+ *                  schema:
+ *                      type: object
+ *                      items:
+ *                          $ref: '#/definitions/Task'
+ */
+router.post('/', (req, res) => {
+      </code>
+    </pre>
+    <div>
+      <div>1</div>
+      <div>1</div>
+    </div>
+    </div>
+  </section>
+  <section>
     https://swagger.io/docs/specification/about/
-    http://localhost:3333/api/api-docs.json
     Swagger 2 - Swagger 3 is now out
   </section>
 </section>
@@ -176,12 +222,21 @@ module.exports = (server) => {
 // - https://github.com/hakimel/reveal.js#configuration
 // - https://github.com/hakimel/reveal.js#dependencies
 Reveal.initialize({
+center: false,
 history: true,
 dependencies: [
   { src: 'plugin/markdown/marked.js' },
   { src: 'plugin/markdown/markdown.js' },
   { src: 'plugin/notes/notes.js', async: true },
-  { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+  // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+  { src: 'path/to/highlight.js' },
+  {
+    src: 'node_modules/reveal-code-focus/reveal-code-focus.js',
+    async: true,
+    callback: function() {
+      RevealCodeFocus();
+    }
+  }
 ],
 transition: 'zoom'
 });
