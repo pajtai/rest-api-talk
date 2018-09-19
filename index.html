@@ -120,10 +120,10 @@
   </section>
   <section id="swagger-options">
       <h3>Using Swagger</h3>
-        <div class="grid grid--3-center">
-          <div class="fragment zoom-in">One yaml file to describe the api</div>
-          <h3 class="fragment zoom-in">or</h3>
-          <div class="fragment zoom-in">Document each controller / model</div>
+        <div class="grid">
+          <div class="fragment zoom-in">Need one yaml file to describe the api</div>
+          <div class="fragment zoom-in">Can use JSDOC to build the yaml</div>
+          <div class="fragment zoom-in fragment__not-top-row">Document each controller / model and assemble into the yaml</div>
         </div>
   </section>
   <section id="swagger-install">
@@ -194,11 +194,13 @@ const express = require('express');
 
 module.exports = (app) => {
 
+    app.services.logger.debug('Tasks Controller Loaded');
+
     const router = express.Router();
 
     /**
      *  @swagger
-     *  /api/v1/todos:
+     *  /api/v1/tasks:
      *      get:
      *          description: Get collection of all tasks
      *          produces:
@@ -213,15 +215,15 @@ module.exports = (app) => {
      */
     router.get('/', (req, res) => {
 
-        app.models.todos
+        app.models.tasks
             .find()
-            .then((docs) => res.json(docs))
-            .catch((error) => res.status(500).send(error));
+            .then(docs => res.json(docs))
+            .catch(sendError(res));
     });
 
     /**
      *  @swagger
-     *  /api/v1/todos:
+     *  /api/v1/tasks:
      *      post:
      *          description: Add a task
      *          produces:
@@ -241,33 +243,69 @@ module.exports = (app) => {
      */
     router.post('/', (req, res) => {
 
-        const todo = app.models.todos(req.body);
+        const incoming = req.body;
 
-        todo
-            .save()
-            .then((doc) => res.json(doc))
-            .catch((error) => res.status(500).send(error));
+        const task = app.models.tasks(incoming);
+
+        task
+            .save(incoming)
+            .then(doc => res.json(doc))
+            .catch(sendError(res));
+    });
+
+    /**
+     *  @swagger
+     *  /api/v1/tasks/{id}:
+     *      delete:
+     *          description: Delete a task by id
+     *          parameters:
+     *              - in: path
+     *                name: id
+     *                schema:
+     *                  type: string
+     */
+    router.delete('/:id', (req, res) => {
+        console.log('about to delete', req.params.id);
+        app.models.tasks.findByIdAndRemove(req.params.id)
+            .then(doc => {
+                console.log('deleted', doc);
+                res.json(doc)
+            })
+            .catch(sendError(res));
     });
 
     return router;
 };
+
+function sendError(res) {
+    return error => {
+        res.status(500);
+        res.send(error);
+    }
+}
       </code>
     </pre>
     <p class="fragment fade-in-then-out disappear">
       <small>Docs for Swagger 2 are <a href="https://swagger.io/docs/specification/2-0/basic-structure/">here</a>. Docs for OAS 3 are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
       <br/>Overall concept is the same in OAS 3 as Swagger 2.</small>
     </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="10">
+    <p class="fragment fade-in-then-out disappear" data-code-focus="12">
       Mark swagger annotations with <code>@swagger</code>
     </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="34">
-      You do have to know the full path. Disrupts modularity. Could get around it.
+    <p class="fragment fade-in-then-out disappear" data-code-focus="36">
+      You do have to know the full path. Disrupts modularity. Could get around it
     </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="35">
+    <p class="fragment fade-in-then-out disappear" data-code-focus="37">
       Nest everything under the verb.
     </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="39-43">
-      Parameters <small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/2-0/describing-parameters/">https://swagger.io/docs/specification/2-0/describing-parameters/</a></code></small>
+    <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
+      Parameters in body
+    </p>
+    <p class="fragment fade-in-then-out disappear" data-code-focus="68,71-75">
+      Parameter in path
+    </p>
+    <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
+      Parameters docs<small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/2-0/describing-parameters/">https://swagger.io/docs/specification/2-0/describing-parameters/</a></code></small>
     </p>
     <p class="fragment fade-in-then-out disappear" data-code-focus="43,50">
       <code><a target="_blank" href="https://swagger.io/docs/specification/using-ref/">$refs</a></code> are reusable pointers.
@@ -318,11 +356,42 @@ module.exports = (app) => {
     </p>
   </section>
   <section>
-    https://swagger.io/docs/specification/about/
-    Swagger 2 - Swagger 3 is now out
+    <h2>Examples</h2>
+    <div class="grid">
+      <div class="fragment">Simple: <small><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></small></div>
+      <div class="fragment">Complete: <small><a target="_blank" href="https://editor.swagger.io/">https://editor.swagger.io/</a></small></div>
+      <div>&nbsp;</div>
+      <div class="fragment fragment__not-top-row">You can add <br/>
+        <small><a target="_blank" href="https://swagger.io/docs/specification/authentication/">authorizations</a> (api key or OAuth), schemes, namespaces</small>
+      </div>
+    </div>
   </section>
 </section>
-<section></section>
+<section>
+  <section>
+    <h2>Debugging the API</h2>
+    <div class="grid">
+      <div class="fragment">IDEs have debugging built in (e.g. VSC, PHPStorm)</div>
+      <div class="fragment">Use chrome dev tools</div>
+    </div>
+  </section>
+  <section>
+    <h2>Starting the Debugger</h2>
+    <pre class="fragment">
+      <code data-trim data-noescape>
+node --inspect index.js
+# or
+node --inspect-brk index.js
+#
+      </code>
+    </pre>
+    <div class="fragment fade-in-then-out disappear" data-code-focus="1">Send debug signals on port 9229</div>
+    <div class="fragment fade-in-then-out disappear" data-code-focus="3">Also break at start of user script</div>
+  </section>
+  <section>
+    <h2>An example</h2>
+  </section>
+</section>
 <section></section>
 <section>
   <pre>

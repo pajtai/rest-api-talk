@@ -85,3 +85,7 @@
 .reveal small {
   vertical-align: baseline;
 }
+
+.reveal .fragment__not-top-row {
+  margin-top: 40px;
+}
