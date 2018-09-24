@@ -447,15 +447,91 @@ const options = {
           </ul>
       </div>
     </div>
-
+  </section>
+  <section>
+    <h2>Implementation: <small>Option 2</small></h2>
+    <div class="grid">
+      <small>
+      <table>
+        <tr>
+          <th>Date of Request</th>
+        </tr>
+        <tr>
+          <td>04:56 - 2018/09/12</td>
+        </tr>
+        <tr>
+          <td>09:13 - 2018/09/12</td>
+        </tr>
+        <tr>
+          <td>14:33 - 2018/09/12</td>
+        </tr>
+        <tr>
+          <td>01:07 - 2018/09/13</td>
+        </tr>
+      </table>
+      </small>
+      <small>
+        <ul>
+          <li class="fragment">Track each request</li>
+          <li class="fragment">When new request comes in
+            <ul>
+              <li class="fragment">delete logs older than window</li>
+              <li class="fragment">log request</li>
+              <li class="fragment">check if response allowed (<code>requests.length <= limit</code>)</li>
+            </ul>
+          </li>
+        </ul>
+      </small>
+    </div>
+    <br/>
+    <div class="grid">
+      <div class="fragment">
+        <h5>Advantage</h5>
+        <ul>
+          <li class="fragment">Accurate</li>
+        </ul>
+      </div>
+      <div class="fragment">
+        <h5>Disadvantage</h5>
+        <ul>
+          <li class="fragment">More space required</li>
+        </ul>
+      </div>
+    </div>
   </section>
 </section>
-<section></section>
 <section>
-  <pre>
-    <code data-trim data-noescape>
-    </code>
-  </pre>
+  <h2>Summary</h2>
+  <ul>
+    <li class="fragment">Use Swagger to help on board to your API</li>
+    <li class="fragment">Use rate limits to protect your API</li>
+    <li class="fragment">Do your due diligence with NPMs</li>
+  </ul>
+  <br/>
+  <br/>
+  <div class="fragment">Slides will be online. Check <a target="_blank" href="https://twitter.com/PeterAjtai">@peterajtai</a> for url.</div>
+</section>
+<section>
+  <h2><a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">Open House</a></h2>
+  <div class="grid">
+    <div>
+
+      <div><img src="images/open-house.jpg"/></div>
+    </div>
+    <div>
+      <div>Wed, October 3, 2018</div>
+      <div style="margin-top: -24px"><small>4:30 PM – 7:30 PM PDT</small></div>
+      <br/>
+      <small>
+      <div>200 SW Market Street</div>
+      <div>Suite 975</div>
+      <div>Portland, OR 97201-5715</div>
+      </small>
+    </div>
+  </div>
+  <div>
+    <a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">RSVP</a>
+  </div>
 </section>
 </div>
 </div>
