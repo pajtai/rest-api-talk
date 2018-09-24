@@ -100,3 +100,8 @@
 .reveal table {
   margin: 0;
 }
+
+
+element.style {
+  white-space: normal;
+}

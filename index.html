@@ -38,95 +38,132 @@
 <div class="reveal">
   <div class="slides">
 
-    <section id="title">
+    <section id="title" data-timing="0">
       <h1>Build a REST API in Node</h1>
     </section>
 
     <section id="intro">
+      <h2 class="row">Peter Ajtai</h2>
       <div class="grid">
-        <h2 class="row">Peter Ajtai</h2>
-        <div>Solid Digital</div>
+        <div class="fragment">
+          <div>Solid Digital</div>
+          <div>Solutions Architect</div>
+        </div>
         <div>
-          <div class="svg-icon svg-icon--solid">
-          <svg class="svg-icon__solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.81 58.18">
-            <g id="Layer_2" data-name="Layer 2">
-              <path fill="currentColor" d="M0 0h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zM0 46.54h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zm-34.9-23.27h11.64v11.64H11.64zm23.27 0h11.64v11.64H34.91zm23.27 0h11.64v11.64H58.18z" id="Layer_1-2" data-name="Layer 1"/>
-            </g>
-          </svg>
+          <div class="fragment">
+            <div class="svg-icon svg-icon--solid">
+              <svg class="svg-icon__solid" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 69.81 58.18">
+                <g id="Layer_2" data-name="Layer 2">
+                  <path fill="currentColor" d="M0 0h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zM0 46.54h11.64v11.64H0zm23.27 0h11.64v11.64H23.27zm23.27 0h11.64v11.64H46.54zm-34.9-23.27h11.64v11.64H11.64zm23.27 0h11.64v11.64H34.91zm23.27 0h11.64v11.64H58.18z" id="Layer_1-2" data-name="Layer 1"/>
+                </g>
+              </svg>
+            </div>
+            www.soliddigital.com
           </div>
-          www.soliddigital.com
+          <div class="fragment"><svg class="svg-icon svg-icon--email" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg> peter.ajtai@gmail.com</div>
+          <div class="fragment">
+            <svg class="svg-icon" id="Logo_FIXED" data-name="Logo — FIXED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><style>.cls-1{fill:none;}.cls-2{fill:#1da1f2;}</style></defs><title>Twitter_Logo_Blue</title><rect class="cls-1"/><path class="cls-2" d="M153.62,301.59c94.34,0,145.94-78.16,145.94-145.94,0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,325,122.47a102.38,102.38,0,0,1-29.46,8.07,51.47,51.47,0,0,0,22.55-28.37,102.79,102.79,0,0,1-32.57,12.45,51.34,51.34,0,0,0-87.41,46.78A145.62,145.62,0,0,1,92.4,107.81a51.33,51.33,0,0,0,15.88,68.47A50.91,50.91,0,0,1,85,169.86c0,.21,0,.43,0,.65a51.31,51.31,0,0,0,41.15,50.28,51.21,51.21,0,0,1-23.16.88,51.35,51.35,0,0,0,47.92,35.62,102.92,102.92,0,0,1-63.7,22A104.41,104.41,0,0,1,75,278.55a145.21,145.21,0,0,0,78.62,23"/></svg>
+            @PeterAjtai
+          </div>
         </div>
-        <div>Solutions Architect</div>
-        <div><svg class="svg-icon svg-icon--email" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="24" height="24" viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.779l5.513-6.812zm9.208-1.264l4.616-3.741v9.348l-4.616-5.607z"/></svg> peter.ajtai@gmail.com</div>
-        <div></div>
-        <div>
-          <svg class="svg-icon" id="Logo_FIXED" data-name="Logo — FIXED" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><defs><style>.cls-1{fill:none;}.cls-2{fill:#1da1f2;}</style></defs><title>Twitter_Logo_Blue</title><rect class="cls-1"/><path class="cls-2" d="M153.62,301.59c94.34,0,145.94-78.16,145.94-145.94,0-2.22,0-4.43-.15-6.63A104.36,104.36,0,0,0,325,122.47a102.38,102.38,0,0,1-29.46,8.07,51.47,51.47,0,0,0,22.55-28.37,102.79,102.79,0,0,1-32.57,12.45,51.34,51.34,0,0,0-87.41,46.78A145.62,145.62,0,0,1,92.4,107.81a51.33,51.33,0,0,0,15.88,68.47A50.91,50.91,0,0,1,85,169.86c0,.21,0,.43,0,.65a51.31,51.31,0,0,0,41.15,50.28,51.21,51.21,0,0,1-23.16.88,51.35,51.35,0,0,0,47.92,35.62,102.92,102.92,0,0,1-63.7,22A104.41,104.41,0,0,1,75,278.55a145.21,145.21,0,0,0,78.62,23"/></svg>
-          @PeterAjtai
-        </div>
-
-
       </div>
+      <aside class="notes">
+        <p>SLIDE</p>
+        <p>Hi, I'm Peter Ajtai, and I'm the Solutions Architect at Solid Digital.</p>
+        <p>Solid is a digital agency. We do everything from marketing landing pages, to hooking up DRM for VOD platforms.</p>
+        <p>We always try to partner with our clients, so we can help them figure out how to increase their digital value... How to get more out of their digital assets.</p>
+        <p>
+          In terms of tech stacks we do mostly NGINX with Node or PHP, prefer Vue on the front end, and MySQL, Mongo, and / or Elastic for DBs.
+          For provisioning we use Ansible, and for builds and deploys we use Gitlab CI.
+        </p>
+        <p>SLIDE</p>
+        <p>Our website is www.soliddigital.com.</p>
+        <p>SLIDE</p>
+        <p>I use gmail for my email and you can also find me on Twitter.</p>
+        <p>SLIDE</p>
+        <p>I'll be putting these slides up online, so look in my Twitter feed for that url.</p>
+      </aside>
     </section>
 
     <section id="contents">
-        <h2>Maintaining your API</h2>
+      <h2>Maintaining your API</h2>
       <div class="grid">
         <ul>
-          <li class="fragment zoom-in">Try it out with:
+          <li class="fragment">Try it out with:
             <ul>
-              <li class="fragment zoom-in">Swagger</li>
+              <li class="fragment">Swagger</li>
             </ul>
           </li>
         </ul>
         <ul>
-          <li class="fragment zoom-in">Protect it with:
+          <li class="fragment">Protect it with:
             <ul>
-              <li class="fragment zoom-in">Rate Limits</li>
+              <li class="fragment">Rate Limits</li>
             </ul>
           </li>
         </ul>
       </div>
-    </section>
-    <section>
-      <h2>Creating your API</h2>
-      <div class="grid">
-      <ul></ul>
-      </div>
+      <aside class="notes">
+        <p>
+          I'll be discussing two things related to maintaining a Node Express API. There are a lot of resources on the web
+          about how to setup a REST API with Express. This is about going a little beyond that.
+        </p>
+        <p>
+          That being said, you'll still be able to understand this talk, even if you've never made and express API. I just
+          wanted to set some overall context.
+        </p>
+        <p>SLIDE</p>
+        <p>If you have an API, it's nice to be able to give customers and your tech team current docs and a way to test out the API.</p>
+        <p>Often people setup docs at the beginning of a project and then they go stale.</p>
+        <p>Or you have to create your own Postman or CURL resources to test it.</p>
+        <p>SLIDE</p>
+        <p>We'll be using Swagger to handle these. Swagger is built on OAS (Open API Specification).</p>
+        <p>SLIDE</p>
+        <p>Now, once your API gets popular, you'll want to be able to control how people use it.</p>
+        <p>
+          A common way of doing this is with rate limits. Rate limits allow you to throttle the use of your api based
+          on things like api key and ip address.
+        </p>
+        <p>SLIDE</p>
+        <p>
+          I'll be showing you a rate limit using API keys, and I'll show you how to add API keys into Swagger.
+        </p>
+      </aside>
     </section>
     <section>
       <section id="swagger-intro">
-      <div class="grid">
-        <div>
-          <h2><a href="https://swagger.io/docs/specification/about/" target="_blank">Swagger</a></h2>
-          <p class="fragment zoom-in">A way to document and manually test your api</p>
+        <div class="grid">
+          <div>
+            <h2><a href="https://swagger.io/docs/specification/about/" target="_blank">Swagger</a></h2>
+            <p class="fragment zoom-in">A way to document and manually test your api</p>
+          </div>
+          <div>
+            <ul>
+              <li class="fragment zoom-in">Based on
+                <a href="https://www.openapis.org/about" target="_blank">Open API</a>
+              </li>
+              <li class="fragment zoom-in">Integrations with many languages (including node)</li>
+              <li class="fragment zoom-in">Document with JSDoc</li>
+              <li class="fragment zoom-in">Try API with web GUI</li>
+            </ul>
+          </div>
         </div>
-        <div>
-          <ul>
-            <li class="fragment zoom-in">Based on
-              <a href="https://www.openapis.org/about" target="_blank">Open API</a>
-            </li>
-            <li class="fragment zoom-in">Integrations with many languages (including node)</li>
-            <li class="fragment zoom-in">Document with JSDoc</li>
-            <li class="fragment zoom-in">Try API with web GUI</li>
-          </ul>
-    </div>
-  </div>
-  </section>
-  <section id="swagger-options">
-      <h3>Using Swagger</h3>
+      </section>
+      <section id="swagger-options">
+        <h3>Using Swagger</h3>
         <div class="grid">
           <div class="fragment zoom-in">Need one yaml file to describe the api</div>
           <div class="fragment zoom-in">Can use JSDOC to build the yaml</div>
           <div class="fragment zoom-in fragment__not-top-row">Document each controller / model and assemble into the yaml</div>
         </div>
-  </section>
-  <section id="swagger-install">
-    <h5>
-      <a target="_blank" href="https://github.com/pajtai/rest/blob/c1de7ec422d342849c30de3e2c25afcf33e43ec8/boot/swagger.js">
-        Swagger Setup
-      </a>
-    </h5>
-    <pre>
+      </section>
+      <section id="swagger-install">
+        <h5>
+          <a target="_blank" href="https://github.com/pajtai/rest/blob/c1de7ec422d342849c30de3e2c25afcf33e43ec8/boot/swagger.js">
+            Swagger Setup
+          </a>
+        </h5>
+        <pre>
       <code data-trim data-noescape>
 'use strict';
 
@@ -158,29 +195,29 @@ module.exports = (server) => {
 };
       </code>
     </pre>
-    <div>
-      <p class="fragment fade-in-then-out disappear" data-code-focus="3">
-        We'll use <code>swagger-jsdoc</code> to create our JSON description of the API.
-      </p>
-      <p class="fragment fade-in-then-out disappear" data-code-focus="9">
-        We'll parse our controllers and models for JSDOC comments.
-      </p>
-      <p class="fragment fade-in-then-out disappear" data-code-focus="19">
-        We'll create a JSON object using <code>swagger-jsdoc</code>.
-      </p>
-      <p class="fragment fade-in-then-out disappear" data-code-focus="21">
-        We'll use this JSON object to create the Swagger UI:
-        <small><code><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></code></small>
-      </p>
-      <p class="fragment fade-in-then-out disappear" data-code-focus="24">
-        We'll serve the JSON object, so we can look at it:
-        <small><code><a target="_blank" href="http://localhost:3333/api/api-docs.json">http://localhost:3333/api/api-docs.json</a></code></small>
-      </p>
-    </div>
-  </section>
-  <section>
-    <h5>Swagger JSDOC</h5>
-    <pre>
+        <div>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="3">
+            We'll use <code>swagger-jsdoc</code> to create our JSON description of the API.
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="9">
+            We'll parse our controllers and models for JSDOC comments.
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="19">
+            We'll create a JSON object using <code>swagger-jsdoc</code>.
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="21">
+            We'll use this JSON object to create the Swagger UI:
+            <small><code><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></code></small>
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="24">
+            We'll serve the JSON object, so we can look at it:
+            <small><code><a target="_blank" href="http://localhost:3333/api/api-docs.json">http://localhost:3333/api/api-docs.json</a></code></small>
+          </p>
+        </div>
+      </section>
+      <section>
+        <h5>Swagger JSDOC</h5>
+        <pre>
       <code data-trim data-noescape="">
 'use strict';
 
@@ -279,33 +316,33 @@ function sendError(res) {
 }
       </code>
     </pre>
-    <p class="fragment fade-in-then-out disappear">
-      Docs for Swagger are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="12">
-      Mark swagger annotations with <code>@swagger</code>
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="36">
-      You do have to know the full path. Disrupts modularity. Could get around it
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="37">
-      Nest everything under the verb.
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
-      Parameters in body
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="68,71-75">
-      Parameter in path
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
-      Parameters docs<small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/2-0/describing-parameters/">https://swagger.io/docs/specification/2-0/describing-parameters/</a></code></small>
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="43,50">
-      <code><a target="_blank" href="https://swagger.io/docs/specification/using-ref/">$refs</a></code> are reusable pointers.
-      <small>Here they point to model definitions.</small>
-    </p>
-  </section>
-  <section>
+        <p class="fragment fade-in-then-out disappear">
+          Docs for Swagger are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="12">
+          Mark swagger annotations with <code>@swagger</code>
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="36">
+          You do have to know the full path. Disrupts modularity. Could get around it
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="37">
+          Nest everything under the verb.
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
+          Parameters in body
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="68,71-75">
+          Parameter in path
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
+          Parameters docs<small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/2-0/describing-parameters/">https://swagger.io/docs/specification/2-0/describing-parameters/</a></code></small>
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="43,50">
+          <code><a target="_blank" href="https://swagger.io/docs/specification/using-ref/">$refs</a></code> are reusable pointers.
+          <small>Here they point to model definitions.</small>
+        </p>
+      </section>
+      <section>
     <pre>
       <code data-trim data-noescape="">
 'use strict';
@@ -338,30 +375,30 @@ module.exports = (app) => {
 
       </code>
     </pre>
-    <p class="fragment fade-in-then-out disappear">
-      Let's look at a model to see how we annotate it with reusable definitions.
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="9-10">
-      <small><code>$ref: '#/definitions/Task'</code></small>
-    </p>
-    <p class="fragment fade-in-then-out disappear" data-code-focus="13-14,19">
-      There is some repetition here.
-    </p>
-  </section>
-  <section>
-    <h2>Examples</h2>
-    <div class="grid">
-      <div class="fragment">Simple: <small><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></small></div>
-      <div class="fragment">Complete: <small><a target="_blank" href="https://editor.swagger.io/">https://editor.swagger.io/</a></small></div>
-      <div>&nbsp;</div>
-      <div class="fragment fragment__not-top-row">You can add <br/>
-        <small><a target="_blank" href="https://swagger.io/docs/specification/authentication/">authorizations</a> (api key or OAuth), schemes, namespaces</small>
-      </div>
-    </div>
-  </section>
-  <section>
-    <h2>API Keys</h2>
-    <pre>
+        <p class="fragment fade-in-then-out disappear">
+          Let's look at a model to see how we annotate it with reusable definitions.
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="9-10">
+          <small><code>$ref: '#/definitions/Task'</code></small>
+        </p>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="13-14,19">
+          There is some repetition here.
+        </p>
+      </section>
+      <section>
+        <h2>Examples</h2>
+        <div class="grid">
+          <div class="fragment">Simple: <small><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></small></div>
+          <div class="fragment">Complete: <small><a target="_blank" href="https://editor.swagger.io/">https://editor.swagger.io/</a></small></div>
+          <div>&nbsp;</div>
+          <div class="fragment fragment__not-top-row">You can add <br/>
+            <small><a target="_blank" href="https://swagger.io/docs/specification/authentication/">authorizations</a> (api key or OAuth), schemes, namespaces</small>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>API Keys</h2>
+        <pre>
       <code data-trim data-noescape>
 const options = {
     swaggerDefinition: {
@@ -374,194 +411,195 @@ const options = {
 };
       </code>
     </pre>
-    <div class="fragment" data-code-focus="8"><code>autoload.js</code> will have global configs</div>
-  </section>
-</section>
-<section>
-  <section>
-    <h2>Protect your API</h2>
-    <div class="grid">
-      <div class="fragment">Make API keys mandatory</div>
-      <div class="fragment">Limit requests by API key</div>
-    </div>
-  </section>
-  <section>
-    <h2>4 requests a day</h2>
-    <img class="fragment fade-in-then-out disappear" data-fragment-index="1" src="images/scenario-1.png"/>
-    <div class="fragment fade-in-then-out disappear" data-fragment-index="1">How you imagine it</div>
-    <img class="fragment fade-in disappear" data-fragment-index="2" src="images/scenario-2.png"/>
-    <ul>
-      <li class="fragment fade disappear" data-fragment-index="2">What many npms allow</li>
-      <li class="fragment fade" data-fragment-index="3">Limit is completely reset at end of window</li>
-      <li class="fragment fade" data-fragment-index="4">Essentially 2X planned requests in 1 second
-        <ul class="fragment fade" data-fragment-index="5">
-          <li>Imagine this with a 500 request limit</li>
-        </ul>
-      </li>
-    </ul>
-  </section>
-  <section>
-    <h2>4 requests a day</h2>
-    <h3>Rolling Windows</h3>
-    <img src="images/scenario-3.png"/>
-    <ul>
-      <li class="fragment">Any given window can have only 4 requests</li>
-    </ul>
-  </section>
-  <section>
-    <h2>
-      <a target="_blank" href="https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/">Implementation:</a>
-      <small>Option 1</small>
-    </h2>
-    <div class="grid">
-      <div>
-        <img src="images/bucket.png"/>
-      </div>
-      <small>
+        <div class="fragment" data-code-focus="8"><code>autoload.js</code> will have global configs</div>
+      </section>
+    </section>
+    <section>
+      <section>
+        <h2>Protect your API</h2>
+        <div class="grid">
+          <div class="fragment">Make API keys mandatory</div>
+          <div class="fragment">Limit requests by API key</div>
+        </div>
+      </section>
+      <section>
+        <h2>4 requests a day</h2>
+        <img class="fragment fade-in-then-out disappear" data-fragment-index="1" src="images/scenario-1.png"/>
+        <div class="fragment fade-in-then-out disappear" data-fragment-index="1">How you imagine it</div>
+        <img class="fragment fade-in disappear" data-fragment-index="2" src="images/scenario-2.png"/>
         <ul>
-          <li class="fragment">Tokens represent credits for calls</li>
-          <li class="fragment">An API call removes a token</li>
-          <li class="fragment">Tokens replenished one at a time at rate limit</li>
-        </ul>
-        <br/>
-        <br/>
-        <br/>
-      </small>
-    </div>
-    <br/>
-    <div class="grid">
-      <div class="fragment">
-        <h5>Advantage</h5>
-          <ul>
-            <li class="fragment">Tokens is single int</li>
-          </ul>
-      </div>
-      <div class="fragment">
-        <h5>Disadvantage</h5>
-          <ul>
-            <li class="fragment">Refreshing tokens
-              <small><ul>
-                <li class="fragment">Imagine 1 million users</li>
-              </ul></small>
-            </li>
-          </ul>
-      </div>
-    </div>
-  </section>
-  <section>
-    <h2>Implementation: <small>Option 2</small></h2>
-    <div class="grid">
-      <small>
-      <table>
-        <tr>
-          <th>Date of Request</th>
-        </tr>
-        <tr>
-          <td>04:56 - 2018/09/12</td>
-        </tr>
-        <tr>
-          <td>09:13 - 2018/09/12</td>
-        </tr>
-        <tr>
-          <td>14:33 - 2018/09/12</td>
-        </tr>
-        <tr>
-          <td>01:07 - 2018/09/13</td>
-        </tr>
-      </table>
-      </small>
-      <small>
-        <ul>
-          <li class="fragment">Track each request</li>
-          <li class="fragment">When new request comes in
-            <ul>
-              <li class="fragment">delete logs older than window</li>
-              <li class="fragment">log request</li>
-              <li class="fragment">check if response allowed (<code>requests.length <= limit</code>)</li>
+          <li class="fragment fade disappear" data-fragment-index="2">What many npms allow</li>
+          <li class="fragment fade" data-fragment-index="3">Limit is completely reset at end of window</li>
+          <li class="fragment fade" data-fragment-index="4">Essentially 2X planned requests in 1 second
+            <ul class="fragment fade" data-fragment-index="5">
+              <li>Imagine this with a 500 request limit</li>
             </ul>
           </li>
         </ul>
-      </small>
-    </div>
-    <br/>
-    <div class="grid">
-      <div class="fragment">
-        <h5>Advantage</h5>
+      </section>
+      <section>
+        <h2>4 requests a day</h2>
+        <h3>Rolling Windows</h3>
+        <img src="images/scenario-3.png"/>
         <ul>
-          <li class="fragment">Accurate</li>
+          <li class="fragment">Any given window can have only 4 requests</li>
         </ul>
-      </div>
-      <div class="fragment">
-        <h5>Disadvantage</h5>
-        <ul>
-          <li class="fragment">More space required</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-</section>
-<section>
-  <h2>Summary</h2>
-  <ul>
-    <li class="fragment">Use Swagger to help on board to your API</li>
-    <li class="fragment">Use rate limits to protect your API</li>
-    <li class="fragment">Do your due diligence with NPMs</li>
-  </ul>
-  <br/>
-  <br/>
-  <div class="fragment">Slides will be online. Check <a target="_blank" href="https://twitter.com/PeterAjtai">@peterajtai</a> for url.</div>
-</section>
-<section>
-  <h2><a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">Open House</a></h2>
-  <div class="grid">
-    <div>
-
-      <div><img src="images/open-house.jpg"/></div>
-    </div>
-    <div>
-      <div>Wed, October 3, 2018</div>
-      <div style="margin-top: -24px"><small>4:30 PM – 7:30 PM PDT</small></div>
+      </section>
+      <section>
+        <h2>
+          <a target="_blank" href="https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/">Implementation:</a>
+          <small>Option 1</small>
+        </h2>
+        <div class="grid">
+          <div>
+            <img src="images/bucket.png"/>
+          </div>
+          <small>
+            <ul>
+              <li class="fragment">Tokens represent credits for calls</li>
+              <li class="fragment">An API call removes a token</li>
+              <li class="fragment">Tokens replenished one at a time at rate limit</li>
+            </ul>
+            <br/>
+            <br/>
+            <br/>
+          </small>
+        </div>
+        <br/>
+        <div class="grid">
+          <div class="fragment">
+            <h5>Advantage</h5>
+            <ul>
+              <li class="fragment">Tokens is single int</li>
+            </ul>
+          </div>
+          <div class="fragment">
+            <h5>Disadvantage</h5>
+            <ul>
+              <li class="fragment">Refreshing tokens
+                <small><ul>
+                  <li class="fragment">Imagine 1 million users</li>
+                </ul></small>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section>
+        <h2>Implementation: <small>Option 2</small></h2>
+        <div class="grid">
+          <small>
+            <table>
+              <tr>
+                <th>Date of Request</th>
+              </tr>
+              <tr>
+                <td>04:56 - 2018/09/12</td>
+              </tr>
+              <tr>
+                <td>09:13 - 2018/09/12</td>
+              </tr>
+              <tr>
+                <td>14:33 - 2018/09/12</td>
+              </tr>
+              <tr>
+                <td>01:07 - 2018/09/13</td>
+              </tr>
+            </table>
+          </small>
+          <small>
+            <ul>
+              <li class="fragment">Track each request</li>
+              <li class="fragment">When new request comes in
+                <ul>
+                  <li class="fragment">delete logs older than window</li>
+                  <li class="fragment">log request</li>
+                  <li class="fragment">check if response allowed (<code>requests.length <= limit</code>)</li>
+                </ul>
+              </li>
+            </ul>
+          </small>
+        </div>
+        <br/>
+        <div class="grid">
+          <div class="fragment">
+            <h5>Advantage</h5>
+            <ul>
+              <li class="fragment">Accurate</li>
+            </ul>
+          </div>
+          <div class="fragment">
+            <h5>Disadvantage</h5>
+            <ul>
+              <li class="fragment">More space required</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </section>
+    <section>
+      <h2>Summary</h2>
+      <ul>
+        <li class="fragment">Use Swagger to help on board to your API</li>
+        <li class="fragment">Use rate limits to protect your API</li>
+        <li class="fragment">Do your due diligence with NPMs</li>
+      </ul>
       <br/>
-      <small>
-      <div>200 SW Market Street</div>
-      <div>Suite 975</div>
-      <div>Portland, OR 97201-5715</div>
-      </small>
-    </div>
+      <br/>
+      <div class="fragment">Slides will be online. Check <a target="_blank" href="https://twitter.com/PeterAjtai">@peterajtai</a> for url.</div>
+    </section>
+    <section>
+      <h2><a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">Open House</a></h2>
+      <div class="grid">
+        <div>
+
+          <div><img src="images/open-house.jpg"/></div>
+        </div>
+        <div>
+          <div>Wed, October 3, 2018</div>
+          <div style="margin-top: -24px"><small>4:30 PM – 7:30 PM PDT</small></div>
+          <br/>
+          <small>
+            <div>200 SW Market Street</div>
+            <div>Suite 975</div>
+            <div>Portland, OR 97201-5715</div>
+          </small>
+        </div>
+      </div>
+      <div>
+        <a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">RSVP</a>
+      </div>
+    </section>
   </div>
-  <div>
-    <a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">RSVP</a>
-  </div>
-</section>
-</div>
 </div>
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.js"></script>
 
 <script>
-// More info about config & dependencies:
-// - https://github.com/hakimel/reveal.js#configuration
-// - https://github.com/hakimel/reveal.js#dependencies
-Reveal.initialize({
-center: false,
-history: true,
-dependencies: [
-  { src: 'plugin/markdown/marked.js' },
-  { src: 'plugin/markdown/markdown.js' },
-  { src: 'plugin/notes/notes.js', async: true },
-  // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-  { src: 'plugin/highlight/highlight.js' },
-  {
-    src: 'node_modules/reveal-code-focus/reveal-code-focus.js',
-    async: true,
-    callback: function() {
-      RevealCodeFocus();
-    }
-  }
-],
-transition: 'zoom'
-});
+  // More info about config & dependencies:
+  // - https://github.com/hakimel/reveal.js#configuration
+  // - https://github.com/hakimel/reveal.js#dependencies
+  Reveal.initialize({
+    center: false,
+    defaultTiming: 100,
+    history: true,
+    dependencies: [
+      { src: 'plugin/markdown/marked.js' },
+      { src: 'plugin/markdown/markdown.js' },
+      { src: 'plugin/notes/notes.js', async: true },
+      // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+      { src: 'plugin/highlight/highlight.js' },
+      {
+        src: 'node_modules/reveal-code-focus/reveal-code-focus.js',
+        async: true,
+        callback: function() {
+          RevealCodeFocus();
+        }
+      }
+    ],
+    transition: 'zoom'
+  });
 </script>
 </body>
 </html>
