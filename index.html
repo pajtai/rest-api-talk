@@ -69,18 +69,12 @@
     </section>
 
     <section id="contents">
+        <h2>Maintaining your API</h2>
       <div class="grid">
-        <h2>The story of an API</h2>
-        <div>&nbsp;</div>
         <ul>
           <li class="fragment zoom-in">Try it out with:
             <ul>
               <li class="fragment zoom-in">Swagger</li>
-            </ul>
-          </li>
-          <li class="fragment zoom-in">Fix it with:
-            <ul>
-              <li class="fragment zoom-in">The Debugger</li>
             </ul>
           </li>
         </ul>
@@ -90,14 +84,14 @@
               <li class="fragment zoom-in">Rate Limits</li>
             </ul>
           </li>
-          <li class="fragment zoom-in">Fine tune it with:
-            <ul>
-              <li class="fragment zoom-in">Benchmarking</li>
-            </ul>
-          </li>
         </ul>
       </div>
-
+    </section>
+    <section>
+      <h2>Creating your API</h2>
+      <div class="grid">
+      <ul></ul>
+      </div>
     </section>
     <section>
       <section id="swagger-intro">
@@ -286,8 +280,7 @@ function sendError(res) {
       </code>
     </pre>
     <p class="fragment fade-in-then-out disappear">
-      <small>Docs for Swagger 2 are <a href="https://swagger.io/docs/specification/2-0/basic-structure/">here</a>. Docs for OAS 3 are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
-      <br/>Overall concept is the same in OAS 3 as Swagger 2.</small>
+      Docs for Swagger are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
     </p>
     <p class="fragment fade-in-then-out disappear" data-code-focus="12">
       Mark swagger annotations with <code>@swagger</code>
@@ -366,30 +359,95 @@ module.exports = (app) => {
       </div>
     </div>
   </section>
+  <section>
+    <h2>API Keys</h2>
+    <pre>
+      <code data-trim data-noescape>
+const options = {
+    swaggerDefinition: {
+        info: {
+            title: 'Todo API', // Title (required)
+            version: '0.0.0', // Version (required)
+        },
+    },
+    apis: ['./boot/autoload.js', './models/**/*.model.js', './api/**/*.controller.js'], // Path to the API docs
+};
+      </code>
+    </pre>
+    <div class="fragment" data-code-focus="8"><code>autoload.js</code> will have global configs</div>
+  </section>
 </section>
 <section>
   <section>
-    <h2>Debugging the API</h2>
+    <h2>Protect your API</h2>
     <div class="grid">
-      <div class="fragment">IDEs have debugging built in (e.g. VSC, PHPStorm)</div>
-      <div class="fragment">Use chrome dev tools</div>
+      <div class="fragment">Make API keys mandatory</div>
+      <div class="fragment">Limit requests by API key</div>
     </div>
   </section>
   <section>
-    <h2>Starting the Debugger</h2>
-    <pre class="fragment">
-      <code data-trim data-noescape>
-node --inspect index.js
-# or
-node --inspect-brk index.js
-#
-      </code>
-    </pre>
-    <div class="fragment fade-in-then-out disappear" data-code-focus="1">Send debug signals on port 9229</div>
-    <div class="fragment fade-in-then-out disappear" data-code-focus="3">Also break at start of user script</div>
+    <h2>4 requests a day</h2>
+    <img class="fragment fade-in-then-out disappear" data-fragment-index="1" src="images/scenario-1.png"/>
+    <div class="fragment fade-in-then-out disappear" data-fragment-index="1">How you imagine it</div>
+    <img class="fragment fade-in disappear" data-fragment-index="2" src="images/scenario-2.png"/>
+    <ul>
+      <li class="fragment fade disappear" data-fragment-index="2">What many npms allow</li>
+      <li class="fragment fade" data-fragment-index="3">Limit is completely reset at end of window</li>
+      <li class="fragment fade" data-fragment-index="4">Essentially 2X planned requests in 1 second
+        <ul class="fragment fade" data-fragment-index="5">
+          <li>Imagine this with a 500 request limit</li>
+        </ul>
+      </li>
+    </ul>
   </section>
   <section>
-    <h2>An example</h2>
+    <h2>4 requests a day</h2>
+    <h3>Rolling Windows</h3>
+    <img src="images/scenario-3.png"/>
+    <ul>
+      <li class="fragment">Any given window can have only 4 requests</li>
+    </ul>
+  </section>
+  <section>
+    <h2>
+      <a target="_blank" href="https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/">Implementation:</a>
+      <small>Option 1</small>
+    </h2>
+    <div class="grid">
+      <div>
+        <img src="images/bucket.png"/>
+      </div>
+      <small>
+        <ul>
+          <li class="fragment">Tokens represent credits for calls</li>
+          <li class="fragment">An API call removes a token</li>
+          <li class="fragment">Tokens replenished one at a time at rate limit</li>
+        </ul>
+        <br/>
+        <br/>
+        <br/>
+      </small>
+    </div>
+    <br/>
+    <div class="grid">
+      <div class="fragment">
+        <h5>Advantage</h5>
+          <ul>
+            <li class="fragment">Tokens is single int</li>
+          </ul>
+      </div>
+      <div class="fragment">
+        <h5>Disadvantage</h5>
+          <ul>
+            <li class="fragment">Refreshing tokens
+              <small><ul>
+                <li class="fragment">Imagine 1 million users</li>
+              </ul></small>
+            </li>
+          </ul>
+      </div>
+    </div>
+
   </section>
 </section>
 <section></section>

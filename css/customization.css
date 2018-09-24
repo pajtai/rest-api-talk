@@ -89,3 +89,10 @@
 .reveal .fragment__not-top-row {
   margin-top: 40px;
 }
+
+.reveal section img {
+  border: none;
+  background: none;
+  margin: 0;
+  box-shadow: none;
+}
