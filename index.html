@@ -39,7 +39,11 @@
   <div class="slides">
 
     <section id="title" data-timing="0">
-      <h1>Build a REST API in Node</h1>
+      <h2>Maintaining your Express Rest API:</h2>
+      <div class="grid">
+        <h4>Swagger and Rate Limits</h4>
+        <div><em><small>by Peter Ajtai</small></em></div>
+      </div>
     </section>
 
     <section id="intro">
@@ -135,16 +139,16 @@
         <div class="grid">
           <div>
             <h2><a href="https://swagger.io/docs/specification/about/" target="_blank">Swagger</a></h2>
-            <p class="fragment zoom-in">A way to document and manually test your api</p>
+            <p class="fragment">A way to document and manually test your api</p>
           </div>
           <div>
             <ul>
-              <li class="fragment zoom-in">Based on
+              <li class="fragment">Based on
                 <a href="https://www.openapis.org/about" target="_blank">Open API</a>
               </li>
-              <li class="fragment zoom-in">Integrations with many languages (including node)</li>
-              <li class="fragment zoom-in">Document with JSDoc</li>
-              <li class="fragment zoom-in">Try API with web GUI</li>
+              <li class="fragment">Integrations with many languages (including node)</li>
+              <li class="fragment">Document with JSDoc</li>
+              <li class="fragment">Try API with web GUI</li>
             </ul>
           </div>
         </div>
@@ -155,9 +159,9 @@
       <section id="swagger-options">
         <h3>Using Swagger</h3>
         <div class="grid">
-          <div class="fragment zoom-in">Need one yaml file to describe the api</div>
-          <div class="fragment zoom-in">Can use JSDOC to build the yaml</div>
-          <div class="fragment zoom-in fragment__not-top-row">Document each controller / model and assemble into the yaml</div>
+          <div class="fragment">Need one yaml file to describe the api</div>
+          <div class="fragment">Can use JSDOC to build the yaml</div>
+          <div class="fragment fragment__not-top-row">Document each controller / model and assemble into the yaml</div>
         </div>
       </section>
       <section id="swagger-install">
@@ -748,25 +752,10 @@ const interval = setInterval(this.resetAll, windowMs);
       <div class="fragment">Slides are <a target="_blank" href="https://pajtai.github.io/rest-api-talk">online</a>. Check <a target="_blank" href="https://twitter.com/PeterAjtai">@peterajtai</a> for url.</div>
     </section>
     <section>
-      <h2><a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">Open House</a></h2>
-      <div class="grid">
-        <div>
-
-          <div><img src="images/open-house.jpg"/></div>
-        </div>
-        <div class="fragment">
-          <div>Wed, October 3, 2018</div>
-          <div style="margin-top: -24px"><small>4:30 PM – 7:30 PM PDT</small></div>
-          <br/>
-          <small>
-            <div>200 SW Market Street</div>
-            <div>Suite 975</div>
-            <div>Portland, OR 97201-5715</div>
-          </small>
-        </div>
-      </div>
-      <div>
-        <a target="_blank" href="https://www.eventbrite.com/e/solid-digitals-open-house-tickets-50406027786">RSVP</a>
+      <h2>... And</h2>
+      <div class="grid grid--narrow">
+        <img class="fragment" src="images/hiring.png"/>
+        <div class="fragment"><a target="_blank" href="https://careers.hireology.com/solidinteractiveinc/224851/description"><small>We're hiring a</small><br/> Full-Stack Web Developer</a> </div>
       </div>
     </section>
   </div>
@@ -797,7 +786,7 @@ const interval = setInterval(this.resetAll, windowMs);
         }
       }
     ],
-    transition: 'zoom'
+    transition: 'convex'
   });
 </script>
 </body>
