@@ -7,7 +7,8 @@ out/
 .svn
 log/*.log
 tmp/**
-node_modules/
+node_modules/*
+!node_modules/reveal-code-focus/
 package-lock.json
 .sass-cache
 css/reveal.min.css
