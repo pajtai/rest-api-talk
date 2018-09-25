@@ -148,6 +148,9 @@
             </ul>
           </div>
         </div>
+        <aside class="note">
+
+        </aside>
       </section>
       <section id="swagger-options">
         <h3>Using Swagger</h3>
@@ -169,47 +172,81 @@
 
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const { version } = require('../package');
 
-module.exports = (server) => {
+module.exports = server => {
+
+
     const options = {
-        apis: ['./models/**/*.model.js', './api/**/*.controller.js'],
         swaggerDefinition: {
+            openapi: "3.0.0",
             info: {
-                title: 'Todo API',
-                version
-            }
-        }
+                title: 'Todo API', // Title (required)
+                version: '0.0.0', // Version (required)
+            },
+            servers:  [
+              {
+                url: 'https://my.example.com/api/v1',
+                description: 'Live Server'
+              },
+              {
+                url: '/api/v1',
+                description: 'Local Server'
+              }
+            ],
+            tags: [
+              {
+                name: "Tasks",
+                description: "Things to do."
+              }
+            ]
+        },
+        apis: ['./models/**/*.model.js', './api/**/*.controller.js'],
     };
 
-    // Initialize swagger-jsdoc -> returns validated swagger spec in json format
+// Initialize swagger-jsdoc -> returns validated swagger spec in json format
     const swaggerSpec = swaggerJSDoc(options);
 
-    server.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
-    // Serve our json from express
-    server.get('/api/api-docs.json', (req, res) => {
+    server.get('/api/api-docs.json', function(req, res) {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);
     });
+
+    server.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 };
       </code>
     </pre>
         <div>
           <p class="fragment fade-in-then-out disappear" data-code-focus="3">
-            We'll use <code>swagger-jsdoc</code> to create our JSON description of the API.
+            <code>swagger-jsdoc</code> creates our JSON description of the API.
           </p>
-          <p class="fragment fade-in-then-out disappear" data-code-focus="9">
+          <p class="fragment fade-in-then-out disappear" data-code-focus="4">
+            <code>swagger-ui-express</code> creates the GUI to test the API.
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="11">
+            Make sure to specify Version 3.
+            <small>There are subtle differences between 2 and 3.</small>
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="9-34">
+            Options object to initiate Swagger JSDoc
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="17-24">
+            Servers objects allow one or more base urls.
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="27-30">
+            Tags allow you to group api calls <small>e.g. by nouns</small>
+          </p>
+          <p class="fragment fade-in-then-out disappear" data-code-focus="33">
             We'll parse our controllers and models for JSDOC comments.
           </p>
-          <p class="fragment fade-in-then-out disappear" data-code-focus="19">
+          <p class="fragment fade-in-then-out disappear" data-code-focus="37">
             We'll create a JSON object using <code>swagger-jsdoc</code>.
           </p>
-          <p class="fragment fade-in-then-out disappear" data-code-focus="21">
+          <p class="fragment fade-in-then-out disappear" data-code-focus="44">
             We'll use this JSON object to create the Swagger UI:
             <small><code><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></code></small>
           </p>
-          <p class="fragment fade-in-then-out disappear" data-code-focus="24">
+          <p class="fragment fade-in-then-out disappear" data-code-focus="39-42">
             We'll serve the JSON object, so we can look at it:
             <small><code><a target="_blank" href="http://localhost:3333/api/api-docs.json">http://localhost:3333/api/api-docs.json</a></code></small>
           </p>
@@ -225,105 +262,119 @@ const express = require('express');
 
 module.exports = (app) => {
 
-    app.services.logger.debug('Tasks Controller Loaded');
+  app.services.logger.debug('Tasks Controller Loaded');
 
-    const router = express.Router();
+  const router = express.Router();
 
-    /**
-     *  @swagger
-     *  /api/v1/tasks:
-     *      get:
-     *          description: Get collection of all tasks
-     *          produces:
-     *              - application/json
-     *          responses:
-     *              200:
-     *                  description: tasks
-     *                  schema:
-     *                      type: array
-     *                      items:
-     *                          $ref: '#/definitions/Task'
-     */
-    router.get('/', (req, res) => {
+  /**
+   *  @swagger
+   *  /tasks:
+   *    get:
+   *      tags:
+   *        - Tasks
+   *      description: Get collection of all tasks
+   *      produces:
+   *      responses:
+   *        200:
+   *          content:
+   *            application/json:
+   *              description: tasks
+   *              schema:
+   *                type: array
+   *                items:
+   *                  $ref: '#/components/schemas/Task'
+   */
+  router.get('/', (req, res) => {
 
-        app.models.tasks
-            .find()
-            .then(docs => res.json(docs))
-            .catch(sendError(res));
-    });
+    app.models.tasks
+      .find()
+      .then(docs => res.json(docs))
+      .catch(sendError(res));
+  });
 
-    /**
-     *  @swagger
-     *  /api/v1/tasks:
-     *      post:
-     *          description: Add a task
-     *          produces:
-     *              - application/json
-     *          parameters:
-     *              - in: body
-     *                name: task
-     *                schema:
-     *                  $ref: '#/definitions/Task'
-     *          responses:
-     *              200:
-     *                  description: tasks
-     *                  schema:
-     *                      type: object
-     *                      items:
-     *                          $ref: '#/definitions/Task'
-     */
-    router.post('/', (req, res) => {
+  /**
+   *  @swagger
+   *  /tasks:
+   *    post:
+   *      tags:
+   *        - Tasks
+   *      description: Add a task
+   *      requestBody:
+   *        required: true
+   *        content:
+   *          application/json:
+   *            schema:
+   *              $ref: '#/components/schemas/Task'
+   *      responses:
+   *        201:
+   *          content:
+   *            application/json:
+   *              description: tasks
+   *              schema:
+   *                $ref: '#/components/schemas/Task'
+   */
+  router.post('/', (req, res) => {
 
-        const incoming = req.body;
+    const incoming = req.body;
 
-        const task = app.models.tasks(incoming);
+    const task = app.models.tasks(incoming);
 
-        task
-            .save(incoming)
-            .then(doc => res.json(doc))
-            .catch(sendError(res));
-    });
+    task
+      .save(incoming)
+      .then(doc => res.status(201).json(doc))
+      .catch(sendError(res));
+  });
 
-    /**
-     *  @swagger
-     *  /api/v1/tasks/{id}:
-     *      delete:
-     *          description: Delete a task by id
-     *          parameters:
-     *              - in: path
-     *                name: id
-     *                schema:
-     *                  type: string
-     */
-    router.delete('/:id', (req, res) => {
-        console.log('about to delete', req.params.id);
-        app.models.tasks.findByIdAndRemove(req.params.id)
-            .then(doc => {
-                console.log('deleted', doc);
-                res.json(doc)
-            })
-            .catch(sendError(res));
-    });
+  /**
+   *  @swagger
+   *  /tasks/{id}:
+   *    delete:
+   *      tags:
+   *        - Tasks
+   *      description: Delete a task by id
+   *      parameters:
+   *        - in: path
+   *          name: id
+   *          description: id of task to be deleted
+   *          schema:
+   *            type: string
+   *      responses:
+   *        200:
+   *          content:
+   *            application/json:
+   *              description: tasks
+   *              schema:
+   *                $ref: '#/components/schemas/Task'
+   */
+  router.delete('/:id', (req, res) => {
+    console.log('about to delete', req.params.id);
+    app.models.tasks.findByIdAndRemove(req.params.id)
+      .then(doc => {
+        console.log('deleted', doc);
+        res.json(doc)
+      })
+      .catch(sendError(res));
+  });
 
-    return router;
+  return router;
 };
 
 function sendError(res) {
-    return error => {
-        res.status(500);
-        res.send(error);
-    }
+  return error => {
+    res.status(500);
+    res.send(error);
+  }
 }
       </code>
     </pre>
         <p class="fragment fade-in-then-out disappear">
-          Docs for Swagger are <a href="https://swagger.io/docs/specification/basic-structure/">here</a>. Can use JSON or YAML.
+          Docs for Swagger are <a target="_blank" href="https://swagger.io/docs/specification/about/">here</a>. Can use JSON or YAML.
         </p>
         <p class="fragment fade-in-then-out disappear" data-code-focus="12">
           Mark swagger annotations with <code>@swagger</code>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="36">
-          You do have to know the full path. Disrupts modularity. Could get around it
+        <p class="fragment fade-in-then-out disappear" data-code-focus="13">
+          Path is added to
         </p>
         <p class="fragment fade-in-then-out disappear" data-code-focus="37">
           Nest everything under the verb.
