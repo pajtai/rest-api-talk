@@ -253,7 +253,7 @@ module.exports = server => {
         </div>
       </section>
       <section>
-        <h5>Swagger JSDOC</h5>
+        <h5>Controllers</h5>
         <pre>
       <code data-trim data-noescape="">
 'use strict';
@@ -374,26 +374,28 @@ function sendError(res) {
           Mark swagger annotations with <code>@swagger</code>
         </p>
         <p class="fragment fade-in-then-out disappear" data-code-focus="13">
-          Path is added to
+          Path is added to url from the <a target="_blank" href="http://localhost:3333/api/api-docs/">servers objects.</a>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="37">
+        <p class="fragment fade-in-then-out disappear" data-code-focus="40">
           Nest everything under the verb.
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
-          Parameters in body
+        <p class="fragment fade-in-then-out disappear" data-code-focus="44-49">
+          <a target="_blank" href="https://swagger.io/docs/specification/describing-request-body/">Request body</a>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="68,71-75">
+        <p class="fragment fade-in-then-out disappear" data-code-focus="72,77-82">
           Parameter in path
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="41-45">
-          Parameters docs<small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/2-0/describing-parameters/">https://swagger.io/docs/specification/2-0/describing-parameters/</a></code></small>
+        <p class="fragment fade-in-then-out disappear">
+          Parameters docs<small>(query, path, header, body, or form):<br/> <code><a target="_blank" href="https://swagger.io/docs/specification/describing-parameters/">https://swagger.io/docs/specification/describing-parameters/</a></code></small>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="43,50">
+        <p class="fragment fade-in-then-out disappear" data-code-focus="49,56">
           <code><a target="_blank" href="https://swagger.io/docs/specification/using-ref/">$refs</a></code> are reusable pointers.
           <small>Here they point to model definitions.</small>
+          <small>Let's look at those.</small>
         </p>
       </section>
       <section>
+      <h5>Models</h5>
     <pre>
       <code data-trim data-noescape="">
 'use strict';
@@ -402,39 +404,158 @@ const mongoose = require('mongoose');
 
 module.exports = (app) => {
 
+    app.services.logger.debug('Tasks Model Loaded');
+
     /**
      *  @swagger
-     *  definitions:
+     *  components:
+     *    schemas:
      *      Task:
-     *          type: object
-     *          properties:
-     *              title:
-     *                  type: string
-     *              done:
-     *                  type: boolean
+     *        type: object
+     *        properties:
+     *          title:
+     *            type: string
+     *          done:
+     *            type: boolean
      */
     const tasksSchema = mongoose.Schema({
         title: String,
         done: {
-            default: false,
-            type: Boolean
+            type: Boolean,
+            default: false
         }
     });
 
     return app.connection.model('Tasks', tasksSchema);
 };
-
       </code>
     </pre>
         <p class="fragment fade-in-then-out disappear">
-          Let's look at a model to see how we annotate it with reusable definitions.
+          Creating <code>$refs</code>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="9-10">
-          <small><code>$ref: '#/definitions/Task'</code></small>
+        <p class="fragment fade-in-then-out disappear" data-code-focus="11-13">
+          <small><code>$ref: '#/components/schemas/Task'</code></small>
         </p>
-        <p class="fragment fade-in-then-out disappear" data-code-focus="13-14,19">
+        <p class="fragment fade-in-then-out disappear" data-code-focus="17,19,22,24">
           There is some repetition here.
         </p>
+      </section>
+      <section>
+        <h2>API Keys</h2>
+        <pre>
+      <code data-trim data-noescape>
+'use strict';
+
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+module.exports = server => {
+
+
+    const options = {
+        swaggerDefinition: {
+            openapi: "3.0.0",
+            info: {
+                title: 'Todo API', // Title (required)
+                version: '0.0.0', // Version (required)
+            },
+            servers:  [
+              {
+                url: '/api/v1',
+                description: 'Local Server'
+              },
+              {
+                url: 'https://www.example.com/api/v1',
+                description: 'Production Server'
+              }
+            ],
+            security: [
+              {
+                api_key: []
+              }
+            ],
+            tags: [
+              {
+                name: "Tasks",
+                description: "Things to do."
+              }
+            ]
+        },
+        apis: ['./boot/autoload.js', './models/**/*.model.js', './api/**/*.controller.js'], // Path to the API docs
+    };
+
+// Initialize swagger-jsdoc -> returns validated swagger spec in json format
+    const swaggerSpec = swaggerJSDoc(options);
+
+    server.get('/api/api-docs.json', function(req, res) {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(swaggerSpec);
+    });
+
+    server.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+};
+      </code>
+    </pre>
+    <div class="grid">
+
+      <div class="fragment" data-code-focus="38"><small><code>autoload.js</code> will have global configs</small></div>
+      <div class="fragment" data-code-focus="26-30"><small>Use security schema <code>api_key</code> on all paths</small></div>
+    </div>
+      </section>
+      <section>
+      <h2>API Keys</h2>
+      <pre>
+        <code data-noescape="" data-trim="">
+'use strict';
+
+const consign = require('consign');
+const flatten = require('flat');
+const logger = require('../services/logger')();
+
+module.exports = (server, connection) => {
+
+    const app = {
+        connection
+    };
+
+    consign()
+        .include('services')
+        .include('models')
+        .include('api')
+        .into(app);
+
+  /**
+   *  @swagger
+   *  components:
+   *    securitySchemes:
+   *      api_key:
+   *        type: apiKey
+   *        in: header
+   *        name: X-API-KEY
+   */
+    // Add controllers to the server
+    const flattened = flatten(app.api);
+    Object.entries(flattened).forEach(([route, router]) => {
+        route = '/api/' + route.replace(/\.controller$/, '').replace(/\./g, '/');
+        logger.debug(`mounting router at: ${route}`);
+        server.use(route, router);
+    });
+
+  // Remove .model from the keys.
+    // Needs to be updated if models are put into sub directories
+    Object.entries(app.models).forEach(([modelKey, model]) => {
+        app.models[modelKey.replace(/.model$/,'')] = model;
+    });
+
+    return app;
+};
+        </code>
+      </pre>
+        <div class="fragment fade-in-then-out disappear" data-code-focus="22-23">Name the security scheme <code>api_key</code></div>
+        <div class="fragment fade-in-then-out disappear" data-code-focus="24">It's an API Key</div>
+        <div class="fragment fade-in-then-out disappear" data-code-focus="25">In the header</div>
+        <div class="fragment fade-in-then-out" data-code-focus="26">The header is <code>X-API-KEY</code></div>
       </section>
       <section>
         <h2>Examples</h2>
@@ -442,27 +563,7 @@ module.exports = (app) => {
           <div class="fragment">Simple: <small><a target="_blank" href="http://localhost:3333/api/api-docs/">http://localhost:3333/api/api-docs/</a></small></div>
           <div class="fragment">Complete: <small><a target="_blank" href="https://editor.swagger.io/">https://editor.swagger.io/</a></small></div>
           <div>&nbsp;</div>
-          <div class="fragment fragment__not-top-row">You can add <br/>
-            <small><a target="_blank" href="https://swagger.io/docs/specification/authentication/">authorizations</a> (api key or OAuth), schemes, namespaces</small>
-          </div>
         </div>
-      </section>
-      <section>
-        <h2>API Keys</h2>
-        <pre>
-      <code data-trim data-noescape>
-const options = {
-    swaggerDefinition: {
-        info: {
-            title: 'Todo API', // Title (required)
-            version: '0.0.0', // Version (required)
-        },
-    },
-    apis: ['./boot/autoload.js', './models/**/*.model.js', './api/**/*.controller.js'], // Path to the API docs
-};
-      </code>
-    </pre>
-        <div class="fragment" data-code-focus="8"><code>autoload.js</code> will have global configs</div>
       </section>
     </section>
     <section>
@@ -474,24 +575,69 @@ const options = {
         </div>
       </section>
       <section>
-        <h2>4 requests a day</h2>
+        <h2>Let's find an npm</h2>
+        <img src="images/npm-rate-limit.gif"/>
+        <div class="grid">
+          <div class="fragment">33K weekly downloads</div>
+          <div class="fragment">... but there's a problem</div>
+        </div>
+      </section>
+      <section>
+        <h2>Test it out</h2>
+        <pre>
+          <code data-trim="" data-noescape="">
+const limiter = rateLimit({
+  windowMs: 15 * 1000, // 15 seconds
+  max: 5 // limit each IP to 5 requests per windowMs
+});
+          </code>
+        </pre>
+        <div class="grid">
+          <div class="fragment" data-code-focus="2-3">Limit is <b>5</b> requests per <b>15</b> seconds</div>
+          <div class="fragment">Can I do <b>10</b> requests in <b>10</b> seconds?</div>
+        </div>
+        <br/>
+        <div class="fragment">Let's try: <small><a target="_blank" href="http://localhost:4321/">http://localhost:4321/</a></small></div>
+      </section>
+      <section>
+        <h2>Visualize the Problem</h2>
+        <h5 class="fragment" data-fragment-index="0">Example - 4 requests a day</h5>
         <img class="fragment fade-in-then-out disappear" data-fragment-index="1" src="images/scenario-1.png"/>
         <div class="fragment fade-in-then-out disappear" data-fragment-index="1">How you imagine it</div>
         <img class="fragment fade-in disappear" data-fragment-index="2" src="images/scenario-2.png"/>
         <ul>
           <li class="fragment fade disappear" data-fragment-index="2">What many npms allow</li>
           <li class="fragment fade" data-fragment-index="3">Limit is completely reset at end of window</li>
-          <li class="fragment fade" data-fragment-index="4">Essentially 2X planned requests in 1 second
-            <ul class="fragment fade" data-fragment-index="5">
+          <li class="fragment fade" data-fragment-index="4">Windows are independent of requests</li>
+          <li class="fragment fade" data-fragment-index="5">Essentially 2X planned requests in 1 second
+            <ul class="fragment fade" data-fragment-index="6">
               <li>Imagine this with a 500 request limit</li>
             </ul>
           </li>
         </ul>
       </section>
       <section>
-        <h2>4 requests a day</h2>
-        <h3>Rolling Windows</h3>
-        <img src="images/scenario-3.png"/>
+        <h2>Visualize the Problem</h2>
+        <pre>
+          <code data-trim="" data-noescape="">
+// export an API to allow hits all IPs to be reset
+this.resetAll = function() {
+  hits = {};
+  resetTime = calculateNextResetTime(windowMs);
+};
+
+// simply reset ALL hits every windowMs
+const interval = setInterval(this.resetAll, windowMs);
+//
+          </code>
+        </pre>
+        <div class="fragment" data-code-focus="8"><a target="_blank" href="https://github.com/nfriedly/express-rate-limit/blob/master/lib/memory-store.js#L42">All hits are cleared every <code>windowMs</code></a></div>
+      </section>
+      <section>
+        <h2>Solution</h2>
+        <h3 class="fragment"><a target="_blank" href="https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/">Rolling Windows</a></h3>
+        <h5 class="fragment">4 requests a day</h5>
+        <img class="fragment" src="images/scenario-3.png"/>
         <ul>
           <li class="fragment">Any given window can have only 4 requests</li>
         </ul>
@@ -633,7 +779,7 @@ const options = {
   // - https://github.com/hakimel/reveal.js#dependencies
   Reveal.initialize({
     center: false,
-    defaultTiming: 100,
+    defaultTiming: 90,
     history: true,
     dependencies: [
       { src: 'plugin/markdown/marked.js' },

@@ -37,6 +37,7 @@
   text-align: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  column-gap: 40px;
 }
 
 .grid--3-center {
